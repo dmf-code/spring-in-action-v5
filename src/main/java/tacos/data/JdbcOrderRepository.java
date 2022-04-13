@@ -7,15 +7,12 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import tacos.Order;
 import tacos.Taco;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class JdbcOrderRepository implements OrderRepository {
-    private SimpleJdbcInsert orderInserter;
-    private SimpleJdbcInsert orderTacoInserter;
-    private ObjectMapper objectMapper;
+    private final SimpleJdbcInsert orderInserter;
+    private final SimpleJdbcInsert orderTacoInserter;
+    private final ObjectMapper objectMapper;
 
     @Autowired
     public JdbcOrderRepository(JdbcTemplate jdbc) {
@@ -30,7 +27,7 @@ public class JdbcOrderRepository implements OrderRepository {
     }
 
     @Override
-    public Order save(Order order) {
+    public <S extends Order> S save(S order) {
         order.setPlacedAt(new Date());
         long orderId = saveOrderDetails(order);
         order.setId(orderId);
@@ -60,5 +57,60 @@ public class JdbcOrderRepository implements OrderRepository {
         values.put("taco", taco);
 
         orderTacoInserter.execute(values);
+    }
+
+    @Override
+    public <S extends Order> Iterable<S> saveAll(Iterable<S> entities) {
+        return null;
+    }
+
+    @Override
+    public Optional<Order> findById(Long aLong) {
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean existsById(Long aLong) {
+        return false;
+    }
+
+    @Override
+    public Iterable<Order> findAll() {
+        return null;
+    }
+
+    @Override
+    public Iterable<Order> findAllById(Iterable<Long> longs) {
+        return null;
+    }
+
+    @Override
+    public long count() {
+        return 0;
+    }
+
+    @Override
+    public void deleteById(Long aLong) {
+
+    }
+
+    @Override
+    public void delete(Order entity) {
+
+    }
+
+    @Override
+    public void deleteAllById(Iterable<? extends Long> longs) {
+
+    }
+
+    @Override
+    public void deleteAll(Iterable<? extends Order> entities) {
+
+    }
+
+    @Override
+    public void deleteAll() {
+
     }
 }
