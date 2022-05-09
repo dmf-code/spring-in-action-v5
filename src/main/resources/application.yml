@@ -13,3 +13,6 @@ spring:
       - user-schema.sql
     data:
       - ingredients.sql
+taco:
+  orders:
+    pageSize: 10
